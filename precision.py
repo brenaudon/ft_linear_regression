@@ -1,8 +1,8 @@
+"""This script contains functions to calculate the R-squared value of a linear regression model."""
+
 import numpy as np
 from linear_regression_train import read_data
 from linear_regression_predict import load_thetas
-
-"""This module contains functions to calculate the R-squared value of a linear regression model."""
 
 
 def calculate_r_squared(mileage: np.ndarray, price: np.ndarray, theta0: float, theta1: float) -> float:

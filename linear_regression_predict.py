@@ -1,7 +1,7 @@
-import os
-
-"""This module contains functions to load trained parameters and predict the price of a car
+"""This script contains functions to load trained parameters and predict the price of a car
  based on its mileage."""
+
+import os
 
 def load_thetas(file_path: str = 'thetas.txt') -> tuple[float, float]:
     """Load the trained theta values from a file.
