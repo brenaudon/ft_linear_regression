@@ -3,15 +3,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import linregress
 
-def read_data(file_path):
+def read_data(file_path: str):
     """Read data from a CSV file.
 
-    Keyword arguments:
-    file_path -- the path to the CSV file
+    @param file_path: The path to the CSV file.
+    @type  file_path: str
 
-    Returns:
-    mileage -- numpy array of mileage data
-    price -- numpy array of price data
+    @return: The mileage and price data.
+    @rtype:  tuple of numpy arrays
     """
     mileage = []
     price = []
@@ -31,11 +30,11 @@ def read_data(file_path):
 def normalize(data):
     """Normalize the data.
 
-    Keyword arguments:
-    data -- the data to be normalized
+    @param data: The data to be normalized.
+    @type  data: numpy array
 
-    Returns:
-    normalized data
+    @return: The normalized data.
+    @rtype:  numpy array
     """
     return (data - np.min(data)) / (np.max(data) - np.min(data))
 
@@ -43,13 +42,15 @@ def normalize(data):
 def denormalize(data, original_min, original_max):
     """Denormalize the data.
 
-    Keyword arguments:
-    data -- the data to be denormalized
-    original_min -- the original minimum value
-    original_max -- the original maximum value
+    @param data: The data to be denormalized.
+    @type  data: numpy array
+    @param original_min: The original minimum value.
+    @type  original_min: number
+    @param original_max: The original maximum value.
+    @type  original_max: number
 
-    Returns:
-    denormalized data
+    @return: The denormalized data.
+    @rtype:  numpy array
     """
     return data * (original_max - original_min) + original_min
 
@@ -57,14 +58,17 @@ def denormalize(data, original_min, original_max):
 def cost(mileage, price, theta0, theta1):
     """Calculate the cost of the linear regression model.
 
-    Keyword arguments:
-    mileage -- numpy array of mileage data
-    price -- numpy array of price data
-    theta0 -- the intercept of the regression line
-    theta1 -- the slope of the regression line
+    @param mileage: The mileage data.
+    @type  mileage: numpy array
+    @param price: The price data.
+    @type  price: numpy array
+    @param theta0: The intercept of the regression line.
+    @type  theta0: number
+    @param theta1: The slope of the regression line.
+    @type  theta1: number
 
-    Returns:
-    total cost
+    @return: The total cost.
+    @rtype:  number
     """
     m = len(mileage)
     total_error = 0
@@ -78,16 +82,17 @@ def cost(mileage, price, theta0, theta1):
 def train_linear_regression(mileage, price, learning_rate=0.1, iterations=1000):
     """Perform linear regression using gradient descent.
 
-    Keyword arguments:
-    mileage -- numpy array of mileage data
-    price -- numpy array of price data
-    learning_rate -- the learning rate for gradient descent (default 0.1)
-    iterations -- the number of iterations for gradient descent (default 1000)
+    @param mileage: The mileage data.
+    @type  mileage: numpy array
+    @param price: The price data.
+    @type  price: numpy array
+    @param learning_rate: The learning rate for gradient descent.
+    @type  learning_rate: number
+    @param iterations: The number of iterations for gradient descent.
+    @type  iterations: int
 
-    Returns:
-    theta0 -- the intercept of the regression line
-    theta1 -- the slope of the regression line
-    cost_history -- list of cost values for each iteration
+    @return: The intercept, slope, and cost history.
+    @rtype:  tuple of (number, number, list of numbers)
     """
     theta0 = 0
     theta1 = 0
@@ -121,15 +126,17 @@ def train_linear_regression(mileage, price, learning_rate=0.1, iterations=1000):
 def get_denormalized_thetas(price, mileage, theta0, theta1):
     """Get the denormalized theta values.
 
-    Keyword arguments:
-    price -- numpy array of price data
-    mileage -- numpy array of mileage data
-    theta0 -- the intercept of the regression line
-    theta1 -- the slope of the regression line
+    @param price: The price data.
+    @type  price: numpy array
+    @param mileage: The mileage data.
+    @type  mileage: numpy array
+    @param theta0: The intercept of the regression line.
+    @type  theta0: number
+    @param theta1: The slope of the regression line.
+    @type  theta1: number
 
-    Returns:
-    denormalized theta0
-    denormalized theta1
+    @return: The denormalized intercept and slope.
+    @rtype:  tuple of (number, number)
     """
     normalized_mileage = normalize(mileage)
 
@@ -143,12 +150,14 @@ def get_denormalized_thetas(price, mileage, theta0, theta1):
 
 
 def save_thetas(theta0, theta1, file_path='thetas.txt'):
-    """Save the trained theta values to a file. Create it if it doesn't exist.
+    """Save the trained theta values to a file.
 
-    Keyword arguments:
-    theta0 -- the intercept of the regression line
-    theta1 -- the slope of the regression line
-    file_path -- the path to the file (default 'thetas.txt')
+    @param theta0: The intercept of the regression line.
+    @type  theta0: number
+    @param theta1: The slope of the regression line.
+    @type  theta1: number
+    @param file_path: The path to the file.
+    @type  file_path: str
     """
     with open(file_path, 'w') as file:
         file.write(f'{theta0},{theta1}')
@@ -157,11 +166,14 @@ def save_thetas(theta0, theta1, file_path='thetas.txt'):
 def display_regression_line(mileage, price, theta0, theta1):
     """Display the data points and the regression line.
 
-    Keyword arguments:
-    mileage -- numpy array of mileage data
-    price -- numpy array of price data
-    theta0 -- the intercept of the regression line
-    theta1 -- the slope of the regression line
+    @param mileage: The mileage data.
+    @type  mileage: numpy array
+    @param price: The price data.
+    @type  price: numpy array
+    @param theta0: The intercept of the regression line.
+    @type  theta0: number
+    @param theta1: The slope of the regression line.
+    @type  theta1: number
     """
     # Plot the data points
     plt.scatter(mileage, price, color='blue', label='Data points')
@@ -183,8 +195,8 @@ def display_regression_line(mileage, price, theta0, theta1):
 def display_cost_history(cost_history):
     """Display the cost history.
 
-    Keyword arguments:
-    cost_history -- list of cost values for each iteration
+    @param cost_history: The list of cost values for each iteration.
+    @type  cost_history: list of numbers
     """
     plt.plot(cost_history)
     plt.xlabel('Iterations')

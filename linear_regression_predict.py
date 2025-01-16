@@ -3,12 +3,11 @@ import os
 def load_thetas(file_path='thetas.txt'):
     """Load the trained theta values from a file.
 
-    Keyword arguments:
-    file_path -- the path to the file (default 'thetas.txt')
+    @param file_path: The path to the file.
+    @type  file_path: str
 
-    Returns:
-    theta0 -- the intercept of the regression line
-    theta1 -- the slope of the regression line
+    @return: The intercept and slope of the regression line.
+    @rtype:  tuple of (number, number)
     """
     if os.path.exists(file_path):
         with open(file_path, 'r') as file:
@@ -21,13 +20,15 @@ def load_thetas(file_path='thetas.txt'):
 def predict_price(mileage, theta0, theta1):
     """Predict the price based on mileage.
 
-    Keyword arguments:
-    mileage -- the mileage of the car
-    theta0 -- the intercept of the regression line
-    theta1 -- the slope of the regression line
+    @param mileage: The mileage of the car.
+    @type  mileage: number
+    @param theta0: The intercept of the regression line.
+    @type  theta0: number
+    @param theta1: The slope of the regression line.
+    @type  theta1: number
 
-    Returns:
-    estimated price
+    @return: The estimated price.
+    @rtype:  number
     """
     return theta0 + theta1 * mileage
 

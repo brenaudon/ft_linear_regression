@@ -6,14 +6,17 @@ from linear_regression_predict import load_thetas
 def calculate_r_squared(mileage, price, theta0, theta1):
     """Calculate the R-squared value.
 
-    Keyword arguments:
-    mileage -- numpy array of mileage data
-    price -- numpy array of price data
-    theta0 -- the intercept of the regression line
-    theta1 -- the slope of the regression line
+    @param mileage: The mileage data.
+    @type  mileage: numpy array
+    @param price: The price data.
+    @type  price: numpy array
+    @param theta0: The intercept of the regression line.
+    @type  theta0: number
+    @param theta1: The slope of the regression line.
+    @type  theta1: number
 
-    Returns:
-    r_squared -- the R-squared value
+    @return: The R-squared value.
+    @rtype:  number
     """
     ss_total = np.sum((price - np.mean(price)) ** 2)
     ss_residual = np.sum((price - (theta0 + theta1 * mileage)) ** 2)
