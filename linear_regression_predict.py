@@ -1,5 +1,10 @@
-"""This script contains functions to load trained parameters and predict the price of a car
- based on its mileage."""
+"""
+This script contains functions to load trained parameters and predict the price of a car
+based on its mileage.
+
+Dependencies:
+    - os
+"""
 
 import os
 

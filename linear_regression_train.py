@@ -1,5 +1,13 @@
-"""This script contains functions to train a linear regression model using gradient descent.
-Results are displayed using matplotlib and saved to be used in the prediction script."""
+"""
+This script contains functions to train a linear regression model using gradient descent.
+Results are displayed using matplotlib and saved to be used in the prediction script.
+
+Dependencies:
+    - numpy
+    - matplotlib
+    - scipy
+    - csv
+"""
 
 import csv
 import numpy as np

@@ -1,4 +1,11 @@
-"""This script contains functions to calculate the R-squared value of a linear regression model."""
+"""
+This script contains functions to calculate the R-squared value of a linear regression model.
+
+Dependencies:
+    - numpy
+    - linear_regression_train
+    - linear_regression_predict
+"""
 
 import numpy as np
 from linear_regression_train import read_data
