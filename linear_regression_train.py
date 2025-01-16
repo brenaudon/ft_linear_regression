@@ -1,6 +1,7 @@
 import csv
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.stats import linregress
 
 # Function to read data from CSV file
 def read_data(file_path):
@@ -37,7 +38,7 @@ def cost(mileage, price, theta0, theta1):
     return total_error / (2 * m)
 
 # Function to perform linear regression using gradient descent
-def train_linear_regression(mileage, price, learning_rate=0.05, iterations=1000):
+def train_linear_regression(mileage, price, learning_rate=0.1, iterations=1000):
     theta0 = 0
     theta1 = 0
     m = len(mileage)
@@ -46,9 +47,6 @@ def train_linear_regression(mileage, price, learning_rate=0.05, iterations=1000)
     # Normalize the data
     mileage = normalize(mileage)
     price = normalize(price)
-
-    print(mileage)
-    print(price)
 
     for _ in range(iterations):
         sum_errors_theta0 = 0
@@ -79,13 +77,9 @@ def display_regression_line(mileage, price, theta0, theta1):
     # Plot the data points
     plt.scatter(mileage, price, color='blue', label='Data points')
 
-    normalized_mileage = normalize(mileage)
+    regression_line = theta0 + theta1 * mileage
 
-    # Calculate the regression line and denormalize it
-    regression_line = theta0 + theta1 * normalized_mileage
-    denormalized_regression_line = denormalize(regression_line, np.min(price), np.max(price))
-
-    plt.plot(mileage, denormalized_regression_line, color='red', label='Regression line')
+    plt.plot(mileage, regression_line, color='red', label='Regression line')
 
     # Add labels and title
     plt.xlabel('Mileage')
@@ -104,10 +98,22 @@ def display_cost_history(cost_history):
     plt.title('Cost History')
     plt.show()
 
+def get_denormalized_thetas(price, mileage, theta0, theta1):
+    normalized_mileage = normalize(mileage)
+
+    # Calculate the regression line and denormalize it
+    regression_line = theta0 + theta1 * normalized_mileage
+    denormalized_regression_line = denormalize(regression_line, np.min(price), np.max(price))
+
+    linear_function_data = linregress(mileage, denormalized_regression_line)
+
+    return linear_function_data.intercept, linear_function_data.slope #theta0, theta1
+
 # Main function
 def main():
     mileage, price = read_data('data.csv')
     theta0, theta1, cost_history = train_linear_regression(mileage, price)
+    theta0, theta1 = get_denormalized_thetas(price, mileage, theta0, theta1)
     save_thetas(theta0, theta1)
     print(f'Trained thetas: theta0 = {theta0}, theta1 = {theta1}')
 
