@@ -6,7 +6,7 @@ from scipy.stats import linregress
 """This module contains functions to train a linear regression model using gradient descent. 
 Results are displayed using matplotlib and saved to be used in the prediction script."""
 
-def read_data(file_path: str):
+def read_data(file_path: str) -> tuple[np.ndarray, np.ndarray]:
     """Read data from a CSV file.
 
     @param file_path: The path to the CSV file.
@@ -30,7 +30,7 @@ def read_data(file_path: str):
     return mileage, price
 
 
-def normalize(data):
+def normalize(data: np.ndarray) -> np.ndarray:
     """Normalize the data.
 
     @param data: The data to be normalized.
@@ -42,7 +42,7 @@ def normalize(data):
     return (data - np.min(data)) / (np.max(data) - np.min(data))
 
 
-def denormalize(data, original_min, original_max):
+def denormalize(data: np.ndarray, original_min: float, original_max: float) -> np.ndarray:
     """Denormalize the data.
 
     @param data: The data to be denormalized.
@@ -58,7 +58,7 @@ def denormalize(data, original_min, original_max):
     return data * (original_max - original_min) + original_min
 
 
-def cost(mileage, price, theta0, theta1):
+def cost(mileage: np.ndarray, price: np.ndarray, theta0: float, theta1: float) -> float:
     """Calculate the cost of the linear regression model.
 
     @param mileage: The mileage data.
@@ -82,7 +82,7 @@ def cost(mileage, price, theta0, theta1):
     return total_error / (2 * m)
 
 
-def train_linear_regression(mileage, price, learning_rate=0.1, iterations=1000):
+def train_linear_regression(mileage: np.ndarray, price: np.ndarray, learning_rate: float = 0.1, iterations: int = 1000) -> tuple[float, float, list[float]]:
     """Perform linear regression using gradient descent.
 
     @param mileage: The mileage data.
@@ -126,7 +126,7 @@ def train_linear_regression(mileage, price, learning_rate=0.1, iterations=1000):
     return theta0, theta1, cost_history
 
 
-def get_denormalized_thetas(price, mileage, theta0, theta1):
+def get_denormalized_thetas(price: np.ndarray, mileage: np.ndarray, theta0: float, theta1: float) -> tuple[float, float]:
     """Get the denormalized theta values.
 
     @param price: The price data.
@@ -152,7 +152,7 @@ def get_denormalized_thetas(price, mileage, theta0, theta1):
     return linear_function_data.intercept, linear_function_data.slope #theta0, theta1
 
 
-def save_thetas(theta0, theta1, file_path='thetas.txt'):
+def save_thetas(theta0: float, theta1: float, file_path: str = 'thetas.txt'):
     """Save the trained theta values to a file.
 
     @param theta0: The intercept of the regression line.
@@ -166,7 +166,7 @@ def save_thetas(theta0, theta1, file_path='thetas.txt'):
         file.write(f'{theta0},{theta1}')
 
 
-def display_regression_line(mileage, price, theta0, theta1):
+def display_regression_line(mileage: np.ndarray, price: np.ndarray, theta0: float, theta1: float):
     """Display the data points and the regression line.
 
     @param mileage: The mileage data.
@@ -195,7 +195,7 @@ def display_regression_line(mileage, price, theta0, theta1):
     plt.show()
 
 
-def display_cost_history(cost_history):
+def display_cost_history(cost_history: list[float]):
     """Display the cost history.
 
     @param cost_history: The list of cost values for each iteration.

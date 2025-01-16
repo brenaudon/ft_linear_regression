@@ -5,7 +5,7 @@ from linear_regression_predict import load_thetas
 """This module contains functions to calculate the R-squared value of a linear regression model."""
 
 
-def calculate_r_squared(mileage, price, theta0, theta1):
+def calculate_r_squared(mileage: np.ndarray, price: np.ndarray, theta0: float, theta1: float) -> float:
     """Calculate the R-squared value.
 
     @param mileage: The mileage data.

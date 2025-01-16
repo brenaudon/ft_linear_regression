@@ -3,7 +3,7 @@ import os
 """This module contains functions to load trained parameters and predict the price of a car
  based on its mileage."""
 
-def load_thetas(file_path='thetas.txt'):
+def load_thetas(file_path: str = 'thetas.txt') -> tuple[float, float]:
     """Load the trained theta values from a file.
 
     @param file_path: The path to the file.
@@ -20,7 +20,7 @@ def load_thetas(file_path='thetas.txt'):
     return theta0, theta1
 
 
-def predict_price(mileage, theta0, theta1):
+def predict_price(mileage: float, theta0: float, theta1: float) -> float:
     """Predict the price based on mileage.
 
     @param mileage: The mileage of the car.
