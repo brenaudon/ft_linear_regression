@@ -3,6 +3,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import linregress
 
+"""This module contains functions to train a linear regression model using gradient descent. 
+Results are displayed using matplotlib and saved to be used in the prediction script."""
+
 def read_data(file_path: str):
     """Read data from a CSV file.
 

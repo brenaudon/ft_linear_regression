@@ -1,5 +1,8 @@
 import os
 
+"""This module contains functions to load trained parameters and predict the price of a car
+ based on its mileage."""
+
 def load_thetas(file_path='thetas.txt'):
     """Load the trained theta values from a file.
 
