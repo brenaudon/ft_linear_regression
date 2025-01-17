@@ -90,17 +90,19 @@ def cost(mileage: np.ndarray, price: np.ndarray, theta0: float, theta1: float) -
     return total_error / (2 * m)
 
 
-def train_linear_regression(mileage: np.ndarray, price: np.ndarray, learning_rate: float = 0.1, iterations: int = 1000) -> tuple[float, float, list[float]]:
+def train_linear_regression(mileage: np.ndarray, price: np.ndarray, initial_learning_rate: float = 0.15, iterations: int = 1000, decay_rate: float = 0.001) -> tuple[float, float, list[float]]:
     """Perform linear regression using gradient descent.
 
     @param mileage: The mileage data.
     @type  mileage: numpy array
     @param price: The price data.
     @type  price: numpy array
-    @param learning_rate: The learning rate for gradient descent.
-    @type  learning_rate: number
+    @param initial_learning_rate: The learning rate for gradient descent.
+    @type  initial_learning_rate: number
     @param iterations: The number of iterations for gradient descent.
     @type  iterations: int
+    @param decay_rate: The rate at which the learning rate decays.
+    @type  decay_rate: number
 
     @return: The intercept, slope, and cost history.
     @rtype:  tuple of (number, number, list of numbers)
@@ -114,14 +116,15 @@ def train_linear_regression(mileage: np.ndarray, price: np.ndarray, learning_rat
     mileage = normalize(mileage)
     price = normalize(price)
 
-    for _ in range(iterations):
+    for i in range(iterations):
+        learning_rate = initial_learning_rate / (1 + decay_rate * i)
         sum_errors_theta0 = 0
         sum_errors_theta1 = 0
-        for i in range(m):
-            estimate_price = theta0 + theta1 * mileage[i]
-            error = estimate_price - price[i]
+        for j in range(m):
+            estimate_price = theta0 + theta1 * mileage[j]
+            error = estimate_price - price[j]
             sum_errors_theta0 += error
-            sum_errors_theta1 += error * mileage[i]
+            sum_errors_theta1 += error * mileage[j]
 
         tmp_theta0 = learning_rate * (1/m) * sum_errors_theta0
         tmp_theta1 = learning_rate * (1/m) * sum_errors_theta1
