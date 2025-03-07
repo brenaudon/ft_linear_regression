@@ -7,9 +7,11 @@ Dependencies:
     - matplotlib
     - scipy
     - csv
+    - sys
 """
 
 import csv
+import sys
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import linregress
@@ -222,7 +224,15 @@ def display_cost_history(cost_history: list[float]):
 # Main function
 def main():
     """Main function to train the linear regression model and display results."""
-    mileage, price = read_data('data.csv')
+    # Check if the dataset file is provided as an argument
+    if len(sys.argv) < 2:
+        print("Usage: python linear_regression_train.py <dataset_file>")
+        return
+
+    dataset_file = sys.argv[1]
+
+    # Load dataset
+    mileage, price = read_data(dataset_file)
     theta0, theta1, cost_history = train_linear_regression(mileage, price)
     theta0, theta1 = get_denormalized_thetas(price, mileage, theta0, theta1)
     save_thetas(theta0, theta1)
