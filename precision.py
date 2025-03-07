@@ -35,17 +35,21 @@ def calculate_r_squared(mileage: np.ndarray, price: np.ndarray, theta0: float, t
 
 def main():
     """Main function to load data, load thetas, and calculate R-squared."""
-    # Load the data
-    mileage, price = read_data('data.csv')
+    try:
+        # Load the data
+        mileage, price = read_data('data.csv')
 
-    # Load the trained theta values
-    theta0, theta1 = load_thetas()
+        # Load the trained theta values
+        theta0, theta1 = load_thetas()
 
-    # Calculate R-squared
-    r_squared = calculate_r_squared(mileage, price, theta0, theta1)
+        # Calculate R-squared
+        r_squared = calculate_r_squared(mileage, price, theta0, theta1)
 
-    # Display the R-squared value
-    print(f"R-squared: {r_squared}")
+        # Display the R-squared value
+        print(f"R-squared: {r_squared}")
+
+    except (FileNotFoundError, ValueError) as e:
+        print(f"Error: {e}")
 
 if __name__ == '__main__':
     main()

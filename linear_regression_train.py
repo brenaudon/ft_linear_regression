@@ -92,7 +92,7 @@ def cost(mileage: np.ndarray, price: np.ndarray, theta0: float, theta1: float) -
     return total_error / (2 * m)
 
 
-def train_linear_regression(mileage: np.ndarray, price: np.ndarray, initial_learning_rate: float = 0.15, iterations: int = 1000, decay_rate: float = 0.001) -> tuple[float, float, list[float]]:
+def train_linear_regression(mileage: np.ndarray, price: np.ndarray, initial_learning_rate: float = 0.1, iterations: int = 1000, decay_rate: float = 0.0) -> tuple[float, float, list[float]]:
     """Perform linear regression using gradient descent.
 
     @param mileage: The mileage data.
@@ -231,18 +231,21 @@ def main():
 
     dataset_file = sys.argv[1]
 
-    # Load dataset
-    mileage, price = read_data(dataset_file)
-    theta0, theta1, cost_history = train_linear_regression(mileage, price)
-    theta0, theta1 = get_denormalized_thetas(price, mileage, theta0, theta1)
-    save_thetas(theta0, theta1)
-    print(f'Trained thetas: theta0 = {theta0}, theta1 = {theta1}')
+    try:
+        # Load dataset
+        mileage, price = read_data(dataset_file)
+        theta0, theta1, cost_history = train_linear_regression(mileage, price, decay_rate=0.001)
+        theta0, theta1 = get_denormalized_thetas(price, mileage, theta0, theta1)
+        save_thetas(theta0, theta1)
+        print(f'Trained thetas: theta0 = {theta0}, theta1 = {theta1}')
 
-    # Display the regression line
-    display_regression_line(mileage, price, theta0, theta1)
+        # Display the regression line
+        display_regression_line(mileage, price, theta0, theta1)
 
-    # Display the cost history
-    display_cost_history(cost_history)
+        # Display the cost history
+        display_cost_history(cost_history)
+    except (FileNotFoundError, ValueError) as e:
+        print(f"Error: {e}")
 
 if __name__ == '__main__':
     main()
