@@ -6,8 +6,6 @@ Dependencies:
     - os
 """
 
-import os
-
 def load_thetas(file_path: str = 'thetas.txt') -> tuple[float, float]:
     """Load the trained theta values from a file.
 
@@ -17,10 +15,10 @@ def load_thetas(file_path: str = 'thetas.txt') -> tuple[float, float]:
     @return: The intercept and slope of the regression line.
     @rtype:  tuple of (number, number)
     """
-    if os.path.exists(file_path):
+    try:
         with open(file_path, 'r') as file:
             theta0, theta1 = map(float, file.read().split(','))
-    else:
+    except (FileNotFoundError, ValueError):
         theta0, theta1 = 0.0, 0.0
     return theta0, theta1
 
@@ -46,8 +44,12 @@ def main():
     # Load the trained theta values
     theta0, theta1 = load_thetas()
 
-    # Prompt the user for mileage input
-    mileage = float(input("Enter the mileage of the car: "))
+    while True:
+        try:
+            mileage = float(input("Enter the mileage of the car: "))
+            break
+        except ValueError:
+            print("Invalid input. Please enter a numeric value.")
 
     # Predict the price
     estimated_price = predict_price(mileage, theta0, theta1)
